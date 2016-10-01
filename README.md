@@ -72,3 +72,7 @@ ln -s /usr/bin/rails /usr/local/bin/rails
 
 /usr/bin以下はシステムユーザーが利用できるディレクトリ.  
 /usr/local/binにシンボリックリンクを貼ることでsudoをしなくてもgemを実行することができる。
+
+### Intellij setting
+* Set SDK
+  * File -> Project Structure ... -> Project Settings -> Project  
