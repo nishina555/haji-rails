@@ -44,10 +44,10 @@ Create path to rbenv
 rbenv install -l
 
 # Install latest version
-rbenv install 2.2.3
+rbenv install 2.2.5
 
 # Set the ruby as global
-rbenv global 2.2.3
+rbenv global 2.2.5
 
 # Check the version
 ruby -v
@@ -72,6 +72,38 @@ ln -s /usr/bin/rails /usr/local/bin/rails
 
 /usr/bin以下はシステムユーザーが利用できるディレクトリ.  
 /usr/local/binにシンボリックリンクを貼ることでsudoをしなくてもgemを実行することができる。
+
+### nokogiriに依存するインストールエラーについて
+capybaraをインストールする際にnokogiriがインストールできないというエラーがでた。  
+これはgemで管理されているnokogirinのバージョンとcapybaraが利用するnokogiriのバージョンに差があるから（な気がする)。以下の方法で対応
+```
+# 一旦nokogiriをアンインストール(必要ないかも)
+$ gem uninstall nokogiri
+
+# 削除されているか確認
+$ gem list | grep nokogiri
+
+# 必要なライブラリのインストール
+$brew install libxml2 libxslt
+
+# ライブラリのリンクを作成
+$brew link libxml2 libxslt --force
+
+# 以下のコマンドで実行(./bin/bundle実行時のエラーログを参考)
+$gem install nokogiri -- --use-system-libraries
+
+# 再実行
+./bin/bundle
+
+# nokogiriがインストールされているか確認
+$gem list | grep nokogiri
+```
+
+[ここ](http://qiita.com/maangie/items/5f6a7885ec977e35552d)を参考にすると、もしかしたら以下のコマンドだけで十分だったかもしれない
+```
+% brew install libxml2
+% NOKOGIRI_USE_SYSTEM_LIBRARIES=1 bundle update
+```
 
 ### Intellij setting
 * Set SDK
